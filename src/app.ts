@@ -23,7 +23,7 @@ interface ValidationErrors {
 
 // Form state management class
 class MultiStepForm {
-  private currentStep: number = 1;
+  private currentStep: number = Number(localStorage.getItem("step")) || 1;
   private formData: UserFormData;
   private readonly totalSteps: number = 3;
   private readonly storageKey: string = "multiStepFormData";
@@ -249,12 +249,12 @@ class MultiStepForm {
   }
 
   private nextStep(): void {
-    console.log("Next Step");
     const errors = this.validateCurrentStep();
 
     if (Object.keys(errors).length === 0) {
       if (this.currentStep < this.totalSteps) {
         this.currentStep++;
+        localStorage.setItem("step", String(this.currentStep));
         this.renderCurrentStep();
         this.updateProgressIndicator();
       }
@@ -266,6 +266,7 @@ class MultiStepForm {
   private prevStep(): void {
     if (this.currentStep > 1) {
       this.currentStep--;
+      localStorage.setItem("step", String(this.currentStep));
       this.renderCurrentStep();
       this.updateProgressIndicator();
     }
@@ -325,6 +326,7 @@ class MultiStepForm {
 
     // Clear localStorage and reset form
     localStorage.removeItem(this.storageKey);
+    localStorage.removeItem("step");
 
     // Reset form data
     this.formData = {
@@ -347,5 +349,3 @@ class MultiStepForm {
 document.addEventListener("DOMContentLoaded", () => {
   new MultiStepForm();
 });
-
-console.log("Hello");

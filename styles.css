@@ -25,6 +25,7 @@ body {
 
 .container {
   width: 100%;
+  overflow-y: scroll;
   /* max-width: 600px; */
   /* margin: 40px auto; */
   display: flex;
@@ -46,9 +47,10 @@ body {
 .multipstep-form-container {
   display: flex;
   background-color: white;
+  overflow-y: scroll;
   /* box-shadow: 0 4px 12px var(--shadow-color); */
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  /* align-items: center; */
   width: 100%;
   height: 100%;
 }
@@ -239,10 +241,11 @@ button {
 /* Summary Page Styles */
 .summary-container {
   margin-top: 20px;
+  overflow-y: scroll;
 }
 
 .summary-section {
-  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
   padding: 20px;
   border-radius: 6px;
   margin-bottom: 20px;

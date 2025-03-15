@@ -2,7 +2,7 @@
 // Form state management class
 class MultiStepForm {
     constructor() {
-        this.currentStep = 1;
+        this.currentStep = Number(localStorage.getItem("step")) || 1;
         this.totalSteps = 3;
         this.storageKey = "multiStepFormData";
         // Initialize with empty data or restore from localStorage
@@ -187,11 +187,11 @@ class MultiStepForm {
         }
     }
     nextStep() {
-        console.log("Next Step");
         const errors = this.validateCurrentStep();
         if (Object.keys(errors).length === 0) {
             if (this.currentStep < this.totalSteps) {
                 this.currentStep++;
+                localStorage.setItem("step", String(this.currentStep));
                 this.renderCurrentStep();
                 this.updateProgressIndicator();
             }
@@ -203,6 +203,7 @@ class MultiStepForm {
     prevStep() {
         if (this.currentStep > 1) {
             this.currentStep--;
+            localStorage.setItem("step", String(this.currentStep));
             this.renderCurrentStep();
             this.updateProgressIndicator();
         }
@@ -253,6 +254,7 @@ class MultiStepForm {
             JSON.stringify(this.formData, null, 2));
         // Clear localStorage and reset form
         localStorage.removeItem(this.storageKey);
+        localStorage.removeItem("step");
         // Reset form data
         this.formData = {
             name: "",
@@ -272,5 +274,4 @@ class MultiStepForm {
 document.addEventListener("DOMContentLoaded", () => {
     new MultiStepForm();
 });
-console.log("Hello");
 //# sourceMappingURL=app.js.map
